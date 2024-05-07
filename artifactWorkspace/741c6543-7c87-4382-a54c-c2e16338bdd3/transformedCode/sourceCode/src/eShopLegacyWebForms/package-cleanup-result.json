@@ -1,0 +1,31 @@
+{
+  "eShopLegacyWebForms": [
+    "Microsoft.Data.SqlClient",
+    "Respond",
+    "System.IO.Compression",
+    "Microsoft.AspNet.ScriptManager.MSAjax",
+    "Microsoft.AspNet.ScriptManager.WebForms",
+    "Microsoft.AspNet.FriendlyUrls",
+    "Modernizr",
+    "System.Runtime.CompilerServices.Unsafe",
+    "log4net",
+    "System.Threading.Tasks.Extensions",
+    "Pipelines.Sockets.Unofficial",
+    "System.Buffers",
+    "System.Threading.Channels",
+    "Microsoft.ApplicationInsights",
+    "System.Diagnostics.PerformanceCounter",
+    "Microsoft.ApplicationInsights.Web",
+    "System.Memory",
+    "Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel",
+    "System.Diagnostics.DiagnosticSource",
+    "bootstrap",
+    "popper.js",
+    "jQuery",
+    "Microsoft.ApplicationInsights.DependencyCollector",
+    "System.IO.Pipelines",
+    "Microsoft.ApplicationInsights.PerfCounterCollector",
+    "System.Numerics.Vectors",
+    "Microsoft.ApplicationInsights.WindowsServer"
+  ]
+}

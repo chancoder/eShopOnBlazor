@@ -29,6 +29,7 @@ namespace eShopLegacyWebForms.Catalog
 
                 TypeDropDownList.DataSource = CatalogService.GetCatalogTypes();
                 TypeDropDownList.SelectedValue = product.CatalogTypeId.ToString();
+                ViewState["AvailabilityType"] = "OnlineOnly";
 
                 this.DataBind();
             }
@@ -59,7 +60,8 @@ namespace eShopLegacyWebForms.Catalog
                     PictureFileName = PictureFileName.Text,
                     AvailableStock = int.Parse(Stock.Text),
                     RestockThreshold = int.Parse(Restock.Text),
-                    MaxStockThreshold = int.Parse(Maxstock.Text)
+                    MaxStockThreshold = int.Parse(Maxstock.Text),
+                    AvailabilityType = ViewState["AvailabilityType"].ToString()
                 };
                 CatalogService.UpdateCatalogItem(catalogItem);
 

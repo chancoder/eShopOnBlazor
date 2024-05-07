@@ -1,0 +1,49 @@
+@namespace eShopLegacyWebForms.Components.ViewSwitcher
+
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.Extensions.Logging
+@inject NavigationManager NavigationManager
+@inject ILogger<ViewSwitcher> Logger
+@rendermode InteractiveServer
+
+<div id="viewSwitcher">
+    @CurrentView view | <a href="@SwitchUrl" data-ajax="false">Switch to @AlternateView</a>
+</div>
+
+@code {
+    protected string CurrentView { get; private set; }
+    protected string AlternateView { get; private set; }
+    protected string SwitchUrl { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        // Determine current view - In Blazor we'd need to implement device detection
+        // This is a simplified implementation - you might want to use a proper device detection library
+        var isMobile = IsMobileDevice();
+        CurrentView = isMobile ? "Mobile" : "Desktop";
+
+        // Determine alternate view
+        AlternateView = isMobile ? "Desktop" : "Mobile";
+
+        // Create switch URL
+        var currentUrl = NavigationManager.Uri;
+        var baseUrl = NavigationManager.BaseUri;
+        var relativePath = currentUrl.Substring(baseUrl.Length - 1);
+        
+        // In Blazor, we'd typically use query parameters or route parameters for view switching
+        SwitchUrl = $"/SwitchView?view={AlternateView}&returnUrl={Uri.EscapeDataString(relativePath)}";
+        
+        Logger.LogInformation($"ViewSwitcher initialized with CurrentView: {CurrentView}, AlternateView: {AlternateView}");
+    }
+
+    private bool IsMobileDevice()
+    {
+        // This is a simplified implementation
+        // In a real application, you would use a proper device detection method
+        // For example, using a library like Wangkanai.Detection or browser feature detection
+        
+        // For demonstration purposes, we'll return false (Desktop view)
+        return false;
+    }
+}

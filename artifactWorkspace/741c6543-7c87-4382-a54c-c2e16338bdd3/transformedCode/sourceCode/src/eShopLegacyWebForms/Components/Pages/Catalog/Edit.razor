@@ -1,0 +1,149 @@
+@namespace eShopLegacyWebForms.Components.Pages.Catalog.Edit
+
+@page "/Catalog/Edit/{id:int}"
+@rendermode InteractiveServer
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject NavigationManager NavigationManager
+@inject ILogger<Edit> Logger
+
+<h2 class="esh-body-title">Edit</h2>
+
+<div class="container">
+    <div class="row">
+        <img class="col-md-6 esh-picture" src="@($"/Pics/{product.PictureFileName}")" />
+        <div class="col-md-6 form-horizontal">
+            <EditForm Model="@product" OnValidSubmit="Save_Click">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Name</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="product.Name" class="form-control" />
+                        <ValidationMessage For="@(() => product.Name)" class="field-validation-valid text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Description</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="product.Description" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Brand</label>
+                    <div class="col-md-8">
+                        <select value="@product.CatalogBrandId" @onchange="BrandSelectionChanged" class="form-control">
+                            @foreach (var brand in brands)
+                            {
+                                <option value="@brand.Id">@brand.Brand</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Type</label>
+                    <div class="col-md-8">
+                        <select value="@product.CatalogTypeId" @onchange="TypeSelectionChanged" class="form-control">
+                            @foreach (var type in types)
+                            {
+                                <option value="@type.Id">@type.Type</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Price</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="product.Price" class="form-control" />
+                        <ValidationMessage For="@(() => product.Price)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Picture name</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="product.PictureFileName" class="form-control" readonly title="Not allowed for edition" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Stock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="product.AvailableStock" class="form-control" />
+                        <ValidationMessage For="@(() => product.AvailableStock)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Restock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="product.RestockThreshold" class="form-control" />
+                        <ValidationMessage For="@(() => product.RestockThreshold)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Max stock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="product.MaxStockThreshold" class="form-control" />
+                        <ValidationMessage For="@(() => product.MaxStockThreshold)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-right esh-button-actions">
+                        <a href="/" class="btn esh-button esh-button-secondary">[ Cancel ]</a>
+                        <button type="submit" class="btn esh-button esh-button-primary">[ Save ]</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    protected CatalogItem product = new CatalogItem();
+    private IEnumerable<CatalogBrand> brands = new List<CatalogBrand>();
+    private IEnumerable<CatalogType> types = new List<CatalogType>();
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation($"Now loading... /Catalog/Edit/{id}");
+        
+        product = CatalogService.FindCatalogItem(id);
+        brands = CatalogService.GetCatalogBrands();
+        types = CatalogService.GetCatalogTypes();
+    }
+
+    private void BrandSelectionChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int brandId))
+        {
+            product.CatalogBrandId = brandId;
+        }
+    }
+
+    private void TypeSelectionChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int typeId))
+        {
+            product.CatalogTypeId = typeId;
+        }
+    }
+
+    protected void Save_Click()
+    {
+        CatalogService.UpdateCatalogItem(product);
+        NavigationManager.NavigateTo("/");
+    }
+}

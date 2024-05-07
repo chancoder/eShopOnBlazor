@@ -1,0 +1,104 @@
+@namespace eShopLegacyWebForms.Components.Pages.Catalog.Details
+
+@page "/Catalog/Details/{id:int}"
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject ILogger<Details> Logger
+@rendermode InteractiveServer
+
+<h2 class="esh-body-title">Details</h2>
+
+<div class="container">
+    <div class="row">
+        @if (product != null)
+        {
+            <img class="col-md-6 esh-picture" src="@($"/Pics/{product.PictureFileName}")" />
+            <dl class="col-md-6 dl-horizontal">
+                <dt>Name
+                </dt>
+
+                <dd>
+                    @product.Name
+                </dd>
+
+                <dt>Description
+                </dt>
+
+                <dd>
+                    @product.Description
+                </dd>
+
+                <dt>Brand
+                </dt>
+
+                <dd>
+                    @product.CatalogBrand.Brand
+                </dd>
+
+                <dt>Type
+                </dt>
+
+                <dd>
+                    @product.CatalogType.Type
+                </dd>
+                <dt>Price
+                </dt>
+
+                <dd>
+                    <span class="esh-price">@product.Price</span>
+                </dd>
+
+                <dt>Picture name
+                </dt>
+
+                <dd>
+                    @product.PictureFileName
+                </dd>
+
+                <dt>Stock
+                </dt>
+
+                <dd>
+                    @product.AvailableStock
+                </dd>
+
+                <dt>Restock
+                </dt>
+
+                <dd>
+                    @product.RestockThreshold
+                </dd>
+
+                <dt>Max stock
+                </dt>
+
+                <dd>
+                    @product.MaxStockThreshold
+                </dd>
+            </dl>
+        }
+    </div>
+
+    <div class="form-actions no-color esh-link-list">
+        <a href="@($"/Catalog/Edit/{product?.Id}")" class="esh-link-item">Edit
+        </a>
+        |
+        <a href="/" class="esh-link-item">Back to list
+        </a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    protected CatalogItem product;
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation($"Now loading... /Catalog/Details.aspx?id={Id}");
+        product = CatalogService.FindCatalogItem(Id);
+    }
+}

@@ -1,0 +1,31 @@
+
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <!-- Simplified head section, keeping only necessary meta tags -->
+</head>
+<body>
+    <div>
+        <h1>Mobile Master Page</h1>
+        
+        <section class="content-wrapper main-content clear-fix">
+            @Body
+        </section>
+        
+        <!-- ViewSwitcher component would need to be reimplemented as a Blazor component -->
+    </div>
+</body>
+</html>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Empty implementation - migrated from Page_Load in the code-behind
+        base.OnInitialized();
+    }
+}

@@ -1,0 +1,202 @@
+@namespace eShopLegacyWebForms.Components.Pages.Default
+
+@page "/"
+@page "/Default"
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using eShopLegacyWebForms.ViewModel
+@using Microsoft.Extensions.Logging
+@using System.Linq
+@using Microsoft.AspNetCore.Components.Routing
+@inject ICatalogService CatalogService
+@inject ILogger<Default> Logger
+@rendermode InteractiveServer
+
+<div class="esh-table">
+    <p class="esh-link-wrapper">
+        <a href="@GetRouteUrl("CreateProductRoute")" class="btn esh-button esh-button-primary">
+            Create New
+        </a>
+    </p>
+
+    @if (Model?.Data == null || !Model.Data.Any())
+    {
+        <table>
+            <tr>
+                <td>No data was returned.</td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr class="esh-table-header">
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Picture name</th>
+                    <th>Stock</th>
+                    <th>Restock</th>
+                    <th>Max stock</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td>
+                            <img class="esh-thumbnail" src="@($"/Pics/{item.PictureFileName}")" />
+                        </td>
+                        <td>
+                            <p>@item.Name</p>
+                        </td>
+                        <td>
+                            <p>@item.Description</p>
+                        </td>
+                        <td>
+                            <p>@item.CatalogBrand.Brand</p>
+                        </td>
+                        <td>
+                            <p>@item.CatalogType.Type</p>
+                        </td>
+                        <td>
+                            <p><span class="esh-price">@item.Price</span></p>
+                        </td>
+                        <td>
+                            <p>@item.PictureFileName</p>
+                        </td>
+                        <td>
+                            <p>@item.AvailableStock</p>
+                        </td>
+                        <td>
+                            <p>@item.RestockThreshold</p>
+                        </td>
+                        <td>
+                            <p>@item.MaxStockThreshold</p>
+                        </td>
+                        <td>
+                            <a href="@GetRouteUrl("EditProductRoute", new { id = item.Id })" class="esh-table-link">
+                                Edit
+                            </a>
+                            |
+                            <a href="@GetRouteUrl("ProductDetailsRoute", new { id = item.Id })" class="esh-table-link">
+                                Details
+                            </a>
+                            |
+                            <a href="@GetRouteUrl("DeleteProductRoute", new { id = item.Id })" class="esh-table-link">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="esh-pager">
+    <div class="container">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <a href="@PaginationPreviousUrl" class="esh-pager-item esh-pager-item--navigable @(Model.ActualPage > 0 ? "" : "esh-pager-item--hidden")">
+                    Previous
+                </a>
+
+                <span class="esh-pager-item">Showing @Model.ItemsPerPage of @Model.TotalItems products - Page @(Model.ActualPage + 1) - @Model.TotalPages</span>
+
+                <a href="@PaginationNextUrl" class="esh-pager-item esh-pager-item--navigable @(Model.ActualPage < Model.TotalPages - 1 ? "" : "esh-pager-item--hidden")">
+                    Next
+                </a>
+            </nav>
+        </article>
+    </div>
+</div>
+
+@code {
+    public const int DefaultPageIndex = 0;
+    public const int DefaultPageSize = 10;
+
+    protected PaginatedItemsViewModel<CatalogItem> Model { get; set; }
+    private string PaginationNextUrl { get; set; }
+    private string PaginationPreviousUrl { get; set; }
+
+    protected override void OnInitialized()
+    {
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        var routeData = GetRouteData();
+        if (PaginationParamsAreSet(routeData))
+        {
+            var size = Convert.ToInt32(routeData["size"]);
+            var index = Convert.ToInt32(routeData["index"]);
+            Model = CatalogService.GetCatalogItemsPaginated(size, index);
+            Logger.LogInformation($"Now loading... /Default?size={size}&index={index}");
+        }
+        else
+        {
+            Model = CatalogService.GetCatalogItemsPaginated(DefaultPageSize, DefaultPageIndex);
+            Logger.LogInformation($"Now loading... /Default?size={DefaultPageSize}&index={DefaultPageIndex}");
+        }
+
+        ConfigurePagination();
+    }
+
+    private Dictionary<string, string> GetRouteData()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var result = new Dictionary<string, string>();
+        
+        foreach (var key in query.AllKeys)
+        {
+            if (key != null)
+            {
+                result[key] = query[key];
+            }
+        }
+        
+        return result;
+    }
+
+    private bool PaginationParamsAreSet(Dictionary<string, string> routeData)
+    {
+        return routeData.ContainsKey("size") && routeData.ContainsKey("index");
+    }
+
+    private void ConfigurePagination()
+    {
+        PaginationNextUrl = GetRouteUrl("ProductsByPageRoute", new { index = Model.ActualPage + 1, size = Model.ItemsPerPage });
+        PaginationPreviousUrl = GetRouteUrl("ProductsByPageRoute", new { index = Model.ActualPage - 1, size = Model.ItemsPerPage });
+    }
+
+    private string GetRouteUrl(string routeName, object routeValues = null)
+    {
+        switch (routeName)
+        {
+            case "ProductsByPageRoute":
+                var values = (dynamic)routeValues;
+                return $"/?index={values.index}&size={values.size}";
+            case "CreateProductRoute":
+                return "/Catalog/Create";
+            case "EditProductRoute":
+                return $"/Catalog/Edit/{((dynamic)routeValues).id}";
+            case "ProductDetailsRoute":
+                return $"/Catalog/Details/{((dynamic)routeValues).id}";
+            case "DeleteProductRoute":
+                return $"/Catalog/Delete/{((dynamic)routeValues).id}";
+            default:
+                return "/";
+        }
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}

@@ -1,0 +1,60 @@
+@namespace eShopLegacyWebForms.Components.ViewSwitcher
+
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.WebUtilities
+@using Microsoft.Extensions.Logging
+@inject NavigationManager NavigationManager
+@inject ILogger<ViewSwitcher> Logger
+
+<div id="viewSwitcher">
+    @CurrentView view | <a href="@SwitchUrl" data-ajax="false">Switch to @AlternateView</a>
+</div>
+
+@code {
+    protected string CurrentView { get; private set; }
+    protected string AlternateView { get; private set; }
+    protected string SwitchUrl { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            // Determine current view
+            // Note: In Blazor, we need a different approach to detect mobile vs desktop
+            // This is a simplified example - you may need to use a more robust method
+            var isMobile = IsMobileDevice();
+            CurrentView = isMobile ? "Mobile" : "Desktop";
+
+            // Determine alternate view
+            AlternateView = isMobile ? "Desktop" : "Mobile";
+
+            // Create switch URL
+            var currentUri = NavigationManager.Uri;
+            var queryParams = new Dictionary<string, string>
+            {
+                { "view", AlternateView },
+                { "switchView", "true" },
+                { "returnUrl", currentUri }
+            };
+
+            // Build the switch URL - in a real app, you might want to use a specific route
+            SwitchUrl = QueryHelpers.AddQueryString("/switchView", queryParams);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error initializing ViewSwitcher component");
+        }
+    }
+
+    private bool IsMobileDevice()
+    {
+        // This is a simplified implementation
+        // In a real application, you would use a more robust method to detect mobile devices
+        // Such as browser detection or a third-party library
+        
+        // For example, you might check the User-Agent header in a real implementation
+        // This is just a placeholder that always returns false
+        return false;
+    }
+}

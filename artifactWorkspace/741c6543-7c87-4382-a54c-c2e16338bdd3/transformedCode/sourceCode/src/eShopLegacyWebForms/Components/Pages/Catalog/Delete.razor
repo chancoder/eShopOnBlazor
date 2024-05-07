@@ -1,0 +1,75 @@
+@namespace eShopLegacyWebForms.Components.Pages.Catalog.Delete
+
+@page "/Catalog/Delete/{id:int}"
+@rendermode InteractiveServer
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject NavigationManager NavigationManager
+@inject ILogger<Delete> Logger
+
+<h2 class="esh-body-title">Delete</h2>
+
+<div class="container">
+    <h3>Are you sure you want to delete this?</h3>
+    <div class="row">
+        @if (productToDelete != null)
+        {
+            <img class="col-md-6 esh-picture" src="@($"/Pics/{productToDelete.PictureFileName}")" />
+            <dl class="col-md-6 dl-horizontal">
+                <dt>Name</dt>
+                <dd>@productToDelete.Name</dd>
+
+                <dt>Description</dt>
+                <dd>@productToDelete.Description</dd>
+
+                <dt>Brand</dt>
+                <dd>@productToDelete.CatalogBrand.Brand</dd>
+
+                <dt>Type</dt>
+                <dd>@productToDelete.CatalogType.Type</dd>
+
+                <dt>Price</dt>
+                <dd class="esh-price">@productToDelete.Price</dd>
+
+                <dt>Picture name</dt>
+                <dd>@productToDelete.PictureFileName</dd>
+
+                <dt>Stock</dt>
+                <dd>@productToDelete.AvailableStock</dd>
+
+                <dt>Restock</dt>
+                <dd>@productToDelete.RestockThreshold</dd>
+
+                <dt>Max stock</dt>
+                <dd>@productToDelete.MaxStockThreshold</dd>
+
+                <dt></dt>
+                <dd class="text-right esh-button-actions">
+                    <a href="/" class="btn esh-button esh-button-secondary">[ Cancel ]</a>
+                    <button class="btn esh-button esh-button-primary" @onclick="Delete_Click">[ Delete ]</button>
+                </dd>
+            </dl>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    protected CatalogItem productToDelete;
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation($"Now loading... /Catalog/Delete?id={Id}");
+        productToDelete = CatalogService.FindCatalogItem(Id);
+    }
+
+    protected void Delete_Click()
+    {
+        CatalogService.RemoveCatalogItem(productToDelete);
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -15,6 +15,7 @@ namespace eShopLegacyWebForms.Catalog
         protected void Page_Load(object sender, EventArgs e)
         {
             _log.Info($"Now loading... /Catalog/Create.aspx");
+            ViewState["AvailabilityType"] = "OnlineOnly";
         }
 
         public IEnumerable<CatalogBrand> GetBrands()
@@ -40,7 +41,8 @@ namespace eShopLegacyWebForms.Catalog
                     Price = decimal.Parse(Price.Text),
                     AvailableStock = int.Parse(Stock.Text),
                     RestockThreshold = int.Parse(Restock.Text),
-                    MaxStockThreshold = int.Parse(Maxstock.Text)
+                    MaxStockThreshold = int.Parse(Maxstock.Text),
+                    AvailabilityType = ViewState["AvailabilityType"].ToString()
                 };
 
                 CatalogService.CreateCatalogItem(catalogItem);

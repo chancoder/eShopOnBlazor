@@ -1,0 +1,27 @@
+
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>Mobile Master Page</h1>
+        <section class="content-wrapper main-content clear-fix">
+            @Body
+        </section>
+    </div>
+</body>
+</html>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Page_Load logic would go here
+        base.OnInitialized();
+    }
+}

@@ -1,0 +1,20 @@
+@namespace eShopLegacyWebForms.Components.Pages.About
+
+@page "/About"
+@using Microsoft.Extensions.Logging
+@rendermode InteractiveServer
+
+<h2>About.</h2>
+<h3>Your application description page.</h3>
+<p>Use this area to provide additional information.</p>
+
+@code {
+    [Inject]
+    private ILogger<About> Logger { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation("Now loading... /About");
+        base.OnInitialized();
+    }
+}

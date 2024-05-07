@@ -1,0 +1,13 @@
+ProjectName,FileName,DetectionType,DetectionItem,Description,SeverityLevel,Recommendation
+eShopLegacyWebForms,N/A,ExternalConnectivityConsiderations,ExternalServiceConnectivity,Detected feature HttpLibraryFeature. Project potentially connects to external services.,Low,Recommend verifying the external service connectivity for Linux.
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,FilePermission,Detected feature FileAccessControlFeature. Project contains APIs that can be used to modify file permissions.,Low,Recommend verifying file permissions.
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'EntityFramework.SqlServer-6.0.0-NUGET' is cross-platform incompatible.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AI.DependencyCollector-2.22.0.997-NUGET' is cross-platform compatibility unknown.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AI.EventCounterCollector-2.22.0.997-NUGET' is cross-platform compatibility unknown.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AI.PerfCounterCollector-2.22.0.997-NUGET' is cross-platform compatibility unknown.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AI.ServerTelemetryChannel-2.22.0.997-NUGET' is cross-platform compatibility unknown.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AI.WindowsServer-2.23.0.29-NUGET' is cross-platform compatibility unknown.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.AspNet.TelemetryCorrelation-1.0.8-NUGET' is cross-platform incompatible.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.ScriptManager.MSAjax-5.0.0-NUGET' is cross-platform incompatible.,High,No recommendation
+eShopLegacyWebForms,N/A,WindowsSpecificConsiderations,Package,'Microsoft.ScriptManager.WebForms-5.0.0-NUGET' is cross-platform incompatible.,High,No recommendation
+eShopLegacyWebForms,CatalogDBInitializer.cs,WindowsSpecificConsiderations,API,'System.IO.DirectoryInfo.ToString()' of package 'System.Runtime-8.0.0-SDK' is cross-platform incompatible.,High,No recommendation

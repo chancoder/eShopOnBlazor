@@ -1,0 +1,182 @@
+@namespace eShopLegacyWebForms.Components.Pages.Catalog.Edit
+
+@page "/Catalog/Edit/{id:int}"
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject NavigationManager NavigationManager
+@inject ILogger<Edit> Logger
+@rendermode InteractiveServer
+
+<h2 class="esh-body-title">Edit</h2>
+
+<div class="container">
+    <div class="row">
+        <img class="col-md-6 esh-picture" src="@($"/Pics/{product.PictureFileName}")" />
+        <div class="col-md-6 form-horizontal">
+            <EditForm Model="@product" OnValidSubmit="Save_Click">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Name</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="name" class="form-control" />
+                        <ValidationMessage For="@(() => name)" class="field-validation-valid text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Description</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="description" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Brand</label>
+                    <div class="col-md-8">
+                        <select value="@selectedBrandId" @onchange="BrandSelectionChanged" class="form-control">
+                            @foreach (var brand in brands)
+                            {
+                                <option value="@brand.Id">@brand.Brand</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Type</label>
+                    <div class="col-md-8">
+                        <select value="@selectedTypeId" @onchange="TypeSelectionChanged" class="form-control">
+                            @foreach (var type in types)
+                            {
+                                <option value="@type.Id">@type.Type</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Price</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="price" class="form-control" />
+                        <ValidationMessage For="@(() => price)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Picture name</label>
+                    <div class="col-md-8">
+                        <InputText @bind-Value="pictureFileName" readonly="true" title="Not allowed for edition" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Stock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="availableStock" class="form-control" />
+                        <ValidationMessage For="@(() => availableStock)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Restock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="restockThreshold" class="form-control" />
+                        <ValidationMessage For="@(() => restockThreshold)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Max stock</label>
+                    <div class="col-md-8">
+                        <InputNumber @bind-Value="maxStockThreshold" class="form-control" />
+                        <ValidationMessage For="@(() => maxStockThreshold)" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-right esh-button-actions">
+                        <a href="/" class="btn esh-button esh-button-secondary">[ Cancel ]</a>
+                        <button type="submit" class="btn esh-button esh-button-primary">[ Save ]</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private CatalogItem product;
+    private IEnumerable<CatalogBrand> brands;
+    private IEnumerable<CatalogType> types;
+    
+    // Form fields
+    private string name;
+    private string description;
+    private int selectedBrandId;
+    private int selectedTypeId;
+    private decimal price;
+    private string pictureFileName;
+    private int availableStock;
+    private int restockThreshold;
+    private int maxStockThreshold;
+    private string catalogTypeViewState;
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation($"Now loading... /Catalog/Edit/{Id}");
+        product = CatalogService.FindCatalogItem(Id);
+        
+        // Load data for dropdowns
+        brands = CatalogService.GetCatalogBrands();
+        types = CatalogService.GetCatalogTypes();
+        
+        // Initialize form fields
+        name = product.Name;
+        description = product.Description;
+        selectedBrandId = product.CatalogBrandId;
+        selectedTypeId = product.CatalogTypeId;
+        price = product.Price;
+        pictureFileName = product.PictureFileName;
+        availableStock = product.AvailableStock;
+        restockThreshold = product.RestockThreshold;
+        maxStockThreshold = product.MaxStockThreshold;
+        catalogTypeViewState = "testing";
+    }
+
+    private void BrandSelectionChanged(ChangeEventArgs e)
+    {
+        selectedBrandId = int.Parse(e.Value.ToString());
+    }
+
+    private void TypeSelectionChanged(ChangeEventArgs e)
+    {
+        selectedTypeId = int.Parse(e.Value.ToString());
+    }
+
+    private void Save_Click()
+    {
+        var catalogItem = new CatalogItem
+        {
+            Id = Id,
+            Name = name,
+            Description = description + catalogTypeViewState,
+            CatalogBrandId = selectedBrandId,
+            CatalogTypeId = selectedTypeId,
+            Price = price,
+            PictureFileName = pictureFileName,
+            AvailableStock = availableStock,
+            RestockThreshold = restockThreshold,
+            MaxStockThreshold = maxStockThreshold
+        };
+        
+        CatalogService.UpdateCatalogItem(catalogItem);
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -33,6 +33,7 @@ namespace eShopLegacyWebForms
                 Model = CatalogService.GetCatalogItemsPaginated(DefaultPageSize, DefaultPageIndex);
                 _log.Info($"Now loading... /Default.aspx?size={DefaultPageSize}&index={DefaultPageIndex}");
             }
+            
 
             productList.DataSource = Model.Data;
             productList.DataBind();
@@ -54,6 +55,7 @@ namespace eShopLegacyWebForms
             PaginationPrevious.NavigateUrl = GetRouteUrl("ProductsByPageRoute", new { index = Model.ActualPage - 1, size = Model.ItemsPerPage });
             var pagerPreviousExtraStyles = Model.ActualPage > 0 ? "" : " esh-pager-item--hidden";
             PaginationPrevious.CssClass = PaginationPrevious.CssClass + pagerPreviousExtraStyles;
+            
         }
     }
 }

@@ -1,0 +1,73 @@
+@namespace eShopLegacyWebForms.Components.ViewSwitcher
+
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.Extensions.Logging
+@using System.Web
+@inject NavigationManager NavigationManager
+@inject ILogger<ViewSwitcher> Logger
+@rendermode InteractiveServer
+
+<div id="viewSwitcher">
+    @CurrentView view | <a href="@SwitchUrl" data-ajax="false">Switch to @AlternateView</a>
+</div>
+
+@code {
+    protected string CurrentView { get; private set; }
+    protected string AlternateView { get; private set; }
+    protected string SwitchUrl { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            // In Blazor, we need a different approach to determine mobile view
+            // This is a simplified example - you may need a more sophisticated detection method
+            var isMobile = IsMobileDevice();
+            CurrentView = isMobile ? "Mobile" : "Desktop";
+            AlternateView = isMobile ? "Desktop" : "Mobile";
+
+            // Create switch URL
+            var currentUrl = NavigationManager.Uri;
+            var baseUrl = NavigationManager.BaseUri;
+            var relativePath = currentUrl.Substring(baseUrl.Length - 1);
+
+            // Create a URL parameter to switch views
+            var switchViewParam = $"switchView={AlternateView.ToLowerInvariant()}";
+            
+            // Append or update the switchView parameter in the URL
+            if (relativePath.Contains("?"))
+            {
+                if (relativePath.Contains("switchView="))
+                {
+                    // Replace existing switchView parameter
+                    SwitchUrl = relativePath.Replace($"switchView={(CurrentView.ToLowerInvariant())}", switchViewParam);
+                }
+                else
+                {
+                    // Append switchView parameter
+                    SwitchUrl = $"{relativePath}&{switchViewParam}";
+                }
+            }
+            else
+            {
+                // Add switchView parameter as the first query parameter
+                SwitchUrl = $"{relativePath}?{switchViewParam}";
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error initializing ViewSwitcher");
+        }
+    }
+
+    private bool IsMobileDevice()
+    {
+        // This is a simplified approach - in a real application, you would use a more robust method
+        // You might want to use a library like UAParser or check the User-Agent header
+        
+        // For this example, we'll just return false to default to desktop view
+        // In a real application, you would implement proper device detection
+        return false;
+    }
+}

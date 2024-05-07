@@ -1,0 +1,177 @@
+@namespace eShopLegacyWebForms.Components.Pages.Default
+
+@page "/"
+@page "/Default"
+@page "/Default/{size:int}/{index:int}"
+@rendermode InteractiveServer
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using eShopLegacyWebForms.ViewModel
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject ILogger<Default> Logger
+@inject NavigationManager NavigationManager
+
+<div class="esh-table">
+    <p class="esh-link-wrapper">
+        <a href="@NavigationManager.GetUriWithQueryParameters("CreateProduct", new Dictionary<string, object>())" class="btn esh-button esh-button-primary">
+            Create New
+        </a>
+    </p>
+
+    @if (Model?.Data == null || !Model.Data.Any())
+    {
+        <table>
+            <tr>
+                <td>No data was returned.</td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr class="esh-table-header">
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Picture name</th>
+                    <th>Stock</th>
+                    <th>Restock</th>
+                    <th>Max stock</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td>
+                            <img class="esh-thumbnail" src="/Pics/@item.PictureFileName" />
+                        </td>
+                        <td>
+                            <p>@item.Name</p>
+                        </td>
+                        <td>
+                            <p>@item.Description</p>
+                        </td>
+                        <td>
+                            <p>@item.CatalogBrand.Brand</p>
+                        </td>
+                        <td>
+                            <p>@item.CatalogType.Type</p>
+                        </td>
+                        <td>
+                            <p><span class="esh-price">@item.Price</span></p>
+                        </td>
+                        <td>
+                            <p>@item.PictureFileName</p>
+                        </td>
+                        <td>
+                            <p>@item.AvailableStock</p>
+                        </td>
+                        <td>
+                            <p>@item.RestockThreshold</p>
+                        </td>
+                        <td>
+                            <p>@item.MaxStockThreshold</p>
+                        </td>
+                        <td>
+                            <a href="@NavigationManager.GetUriWithQueryParameters("EditProduct", new Dictionary<string, object> { { "id", item.Id } })" class="esh-table-link">
+                                Edit
+                            </a>
+                            |
+                            <a href="@NavigationManager.GetUriWithQueryParameters("ProductDetails", new Dictionary<string, object> { { "id", item.Id } })" class="esh-table-link">
+                                Details
+                            </a>
+                            |
+                            <a href="@NavigationManager.GetUriWithQueryParameters("DeleteProduct", new Dictionary<string, object> { { "id", item.Id } })" class="esh-table-link">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="esh-pager">
+    <div class="container">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <a href="@GetPreviousPageUrl()" class="esh-pager-item esh-pager-item--navigable @(Model.ActualPage > 0 ? "" : "esh-pager-item--hidden")">
+                    Previous
+                </a>
+
+                <span class="esh-pager-item">
+                    Showing @Model.ItemsPerPage of @Model.TotalItems products - Page @(Model.ActualPage + 1) - @Model.TotalPages
+                </span>
+
+                <a href="@GetNextPageUrl()" class="esh-pager-item esh-pager-item--navigable @(Model.ActualPage < Model.TotalPages - 1 ? "" : "esh-pager-item--hidden")">
+                    Next
+                </a>
+            </nav>
+        </article>
+    </div>
+</div>
+
+@code {
+    public const int DefaultPageIndex = 0;
+    public const int DefaultPageSize = 10;
+
+    [Parameter]
+    public int? size { get; set; }
+
+    [Parameter]
+    public int? index { get; set; }
+
+    protected PaginatedItemsViewModel<CatalogItem> Model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        if (PaginationParamsAreSet())
+        {
+            int pageSize = size ?? DefaultPageSize;
+            int pageIndex = index ?? DefaultPageIndex;
+            Model = CatalogService.GetCatalogItemsPaginated(pageSize, pageIndex);
+            Logger.LogInformation($"Now loading... /Default?size={pageSize}&index={pageIndex}");
+        }
+        else
+        {
+            Model = CatalogService.GetCatalogItemsPaginated(DefaultPageSize, DefaultPageIndex);
+            Logger.LogInformation($"Now loading... /Default?size={DefaultPageSize}&index={DefaultPageIndex}");
+        }
+    }
+
+    private bool PaginationParamsAreSet()
+    {
+        return size.HasValue && index.HasValue;
+    }
+
+    private string GetNextPageUrl()
+    {
+        return NavigationManager.GetUriWithQueryParameters("Default", new Dictionary<string, object>
+        {
+            { "index", Model.ActualPage + 1 },
+            { "size", Model.ItemsPerPage }
+        });
+    }
+
+    private string GetPreviousPageUrl()
+    {
+        return NavigationManager.GetUriWithQueryParameters("Default", new Dictionary<string, object>
+        {
+            { "index", Model.ActualPage - 1 },
+            { "size", Model.ItemsPerPage }
+        });
+    }
+}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Transformation Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 3px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 3px solid #e9ecef;
+        }
+        .toc h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .back-to-top-section {
+            margin: 20px 0;
+            padding: 10px 0;
+            border-top: 3px solid #e9ecef;
+            text-align: left;
+        }
+        .back-to-top {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-to-top:hover {
+            text-decoration: underline;
+        }
+        .summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 6px solid #3498db;
+            margin: 20px 0;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background-color: #f8f9fa;
+            border: 3px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .stat-box h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .project {
+            background-color: #fff;
+            border: 3px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.partial {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status.failed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .file-changes {
+            margin-top: 15px;
+        }
+        .file-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 3px;
+            overflow-x: auto;
+            font-family: 'Courier', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #24292e;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <h1>AWS Transform for .NET modernization job summary report</h1><p>Report generated on 2025-09-01T11:15:35Z</p><div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#solution-summary">Solution Transformation Summary</a></li>
+            <li><a href="#project-details">Project Details</a>
+        <ul>
+                    <li><a href="#eShopLegacyWebForms">eShopLegacyWebForms</a></li></ul></li><li><a href="#ut-results">Unit Test Results</a></ul></div><h2 id="overview">Overview</h2><div class="stats"><div class="stat-box"><h3>Projects</h3><p>Received: 1</p><p>Transformed: 1</p><p>Completely Transformed: 1</p><p>Partially Transformed: 0</p><p>Not Transformed: 0</p></div><div class="stat-box"><h3>NuGet Package Changes</h3><p>Added: 7</p><p>Removed: 2</p><p>Updated: 2</p></div><div class="stat-box"><h3>API Changes</h3><p>Added: 40</p><p>Removed: 26</p><p>Updated: 70</p></div><div class="stat-box"><h3>File Changes</h3><p>Added: 15</p><p>Removed: 37</p><p>Updated: 3</p><p>Moved: 107</p></div></div><h2 id="solution-summary">Solution Transformation Summary</h2><div class="summary"><h1>Technical Migration Summary: ASP.NET WebForms to ASP.NET Core/Blazor</h1>
+<p>The migration converts a legacy ASP.NET WebForms eShop application to a modern ASP.NET Core and Blazor implementation, with comprehensive changes across the entire application architecture.</p>
+<h2>Key Technical Changes</h2>
+<h3>Architecture Transformation</h3>
+<ul>
+<li>Replaced WebForms page lifecycle with Blazor component model</li>
+<li>Migrated from .NET Framework 4.8 to .NET 8.0</li>
+<li>Shifted from code-behind pattern to component-based architecture</li>
+<li>Replaced <code>Web.config</code> with <code>appsettings.json</code> for configuration</li>
+<li>Implemented <code>Program.cs</code> with ASP.NET Core host builder pattern</li>
+</ul>
+<h3>UI Implementation</h3>
+<ul>
+<li>Converted ASPX markup to Razor syntax</li>
+<li>Replaced ASP:ListView controls with Razor foreach loops</li>
+<li>Implemented component-based layout structure</li>
+<li>Moved from WebForms validation controls to Blazor's form validation</li>
+</ul>
+<h3>Infrastructure Updates</h3>
+<ul>
+<li>Replaced <code>System.Web</code> dependencies with ASP.NET Core equivalents</li>
+<li>Updated database access from <code>System.Data.SqlClient</code> to <code>Microsoft.Data.SqlClient</code></li>
+<li>Modernized hosting infrastructure with <code>IWebHostEnvironment</code></li>
+<li>Removed <code>Global.asax</code> and WebForms HTTP lifecycle hooks</li>
+</ul>
+<h3>Dependency Management</h3>
+<ul>
+<li>Shifted from Autofac-based DI to ASP.NET Core's built-in DI with Autofac extensions</li>
+<li>Transitioned from <code>packages.config</code> to PackageReference format</li>
+<li>Updated NuGet package references to .NET Core compatible versions</li>
+</ul>
+<h3>Project Structure</h3>
+<ul>
+<li>Converted to SDK-style project format</li>
+<li>Reorganized static assets to the standard <code>wwwroot</code> directory</li>
+<li>Replaced WebForms .aspx and code-behind pairs with single .razor components</li>
+<li>Changed from WebForms routing to Blazor's <code>@page</code> directive</li>
+</ul>
+<h3>Request Processing</h3>
+<ul>
+<li>Implemented middleware pattern for request handling</li>
+<li>Replaced <code>Application_BeginRequest</code> with ASP.NET Core middleware</li>
+<li>Updated logging from <code>log4net</code> to <code>ILogger&lt;T&gt;</code></li>
+<li>Added standardized request tracing with activity IDs</li>
+</ul>
+<p>The migration preserves core database functionality and catalog management features while adopting modern ASP.NET Core standards.</p>
+</div><h2 id="project-details">Project Details</h2>
+                        <div class="project" id="project-eshoplegacywebforms">
+                           <div class="project-header">
+                             <h3>eShopLegacyWebForms</h3>
+                               <span class="status success">SUCCEEDED</span>
+                          </div>
+
+                          <div class="stats">
+                            <div class="stat-box">
+                                <h3>NuGet Changes</h3>
+                                     <p>Added: 7</p>
+                                     <p>Removed: 2</p>
+                                     <p>Updated: 2</p>
+                            </div>
+                            <div class="stat-box">
+                               <h3>API Changes</h3>
+                               <p>Added: 40</p>
+                               <p>Removed: 26</p>
+                               <p>Updated: 70</p>
+                            </div>
+                        </div>
+
+                        <div class="file-changes">
+                          <h4>File Changes</h4>
+                    <h5>Files Added</h5>
+                    <div class="file-list"><div>src/eShopLegacyWebForms/appsettings.json</div><div>src/eShopLegacyWebForms/Program.cs</div><div>src/eShopLegacyWebForms/Components/Pages/About.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Contact.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Default.razor</div><div>src/eShopLegacyWebForms/Components/Layout/MainLayout.razor</div><div>src/eShopLegacyWebForms/Components/Layout/Site.MobileLayout.razor</div><div>src/eShopLegacyWebForms/Components/ViewSwitcher.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Catalog/Create.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Catalog/Delete.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Catalog/Details.razor</div><div>src/eShopLegacyWebForms/Components/Pages/Catalog/Edit.razor</div><div>src/eShopLegacyWebForms/Components/App.razor</div><div>src/eShopLegacyWebForms/Components/Routes.razor</div><div>src/eShopLegacyWebForms/Components/_Imports.razor</div></div>
+                    <h5>Files Removed</h5>
+                    <div class="file-list"><div>src/eShopLegacyWebForms/App_Start/RouteConfig.cs</div><div>src/eShopLegacyWebForms/App_Start/BundleConfig.cs</div><div>src/eShopLegacyWebForms/ApplicationInsights.config</div><div>src/eShopLegacyWebForms/packages.config</div><div>src/eShopLegacyWebForms/About.aspx</div><div>src/eShopLegacyWebForms/About.aspx.cs</div><div>src/eShopLegacyWebForms/About.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Contact.aspx</div><div>src/eShopLegacyWebForms/Contact.aspx.cs</div><div>src/eShopLegacyWebForms/Contact.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Default.aspx</div><div>src/eShopLegacyWebForms/Default.aspx.cs</div><div>src/eShopLegacyWebForms/Default.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Site.Master</div><div>src/eShopLegacyWebForms/Site.Master.cs</div><div>src/eShopLegacyWebForms/Site.Master.designer.cs</div><div>src/eShopLegacyWebForms/Site.Mobile.Master</div><div>src/eShopLegacyWebForms/Site.Mobile.Master.cs</div><div>src/eShopLegacyWebForms/Site.Mobile.Master.designer.cs</div><div>src/eShopLegacyWebForms/ViewSwitcher.ascx</div><div>src/eShopLegacyWebForms/ViewSwitcher.ascx.cs</div><div>src/eShopLegacyWebForms/ViewSwitcher.ascx.designer.cs</div><div>src/eShopLegacyWebForms/Catalog/Create.aspx</div><div>src/eShopLegacyWebForms/Catalog/Create.aspx.cs</div><div>src/eShopLegacyWebForms/Catalog/Create.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Catalog/Delete.aspx</div><div>src/eShopLegacyWebForms/Catalog/Delete.aspx.cs</div><div>src/eShopLegacyWebForms/Catalog/Delete.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Catalog/Details.aspx</div><div>src/eShopLegacyWebForms/Catalog/Details.aspx.cs</div><div>src/eShopLegacyWebForms/Catalog/Details.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Catalog/Edit.aspx</div><div>src/eShopLegacyWebForms/Catalog/Edit.aspx.cs</div><div>src/eShopLegacyWebForms/Catalog/Edit.aspx.designer.cs</div><div>src/eShopLegacyWebForms/Global.asax</div><div>src/eShopLegacyWebForms/Global.asax.cs</div><div>src/eShopLegacyWebForms/Web.config</div></div>
+                    <h5>Files Updated</h5>
+                    <div class="file-list"><div>src/eShopLegacyWebForms/eShopLegacyWebForms.csproj</div><div>src/eShopLegacyWebForms/Models/Infrastructure/CatalogDBInitializer.cs</div><div>src/eShopLegacyWebForms/Services/CatalogService.cs</div></div>
+                    <h5>Files Moved</h5>
+                    <div class="file-list"><div>src/eShopLegacyWebForms/wwwroot/favicon.ico</div><div>src/eShopLegacyWebForms/wwwroot/Content/base.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-grid.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-grid.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-grid.min.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-grid.min.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-reboot.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-reboot.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-reboot.min.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap-reboot.min.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap.min.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/bootstrap.min.css.map</div><div>src/eShopLegacyWebForms/wwwroot/Content/custom.css</div><div>src/eShopLegacyWebForms/wwwroot/Content/site.css</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Bold.eot</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Bold.svg</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Bold.ttf</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Bold.woff</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Bold.woff2</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Regular.eot</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Regular.svg</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Regular.ttf</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Regular.woff</div><div>src/eShopLegacyWebForms/wwwroot/fonts/Montserrat-Regular.woff2</div><div>src/eShopLegacyWebForms/wwwroot/images/brand.png</div><div>src/eShopLegacyWebForms/wwwroot/images/brand_dark.png</div><div>src/eShopLegacyWebForms/wwwroot/images/main_banner.png</div><div>src/eShopLegacyWebForms/wwwroot/images/main_footer_text.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/1.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/10.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/11.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/12.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/2.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/3.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/4.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/5.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/6.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/7.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/8.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/9.png</div><div>src/eShopLegacyWebForms/wwwroot/Pics/dummy.png</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.bundle.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.bundle.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.bundle.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.bundle.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/bootstrap.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.min.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.slim.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.slim.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/jquery-3.5.0.slim.min.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/modernizr-2.8.3.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper-utils.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper-utils.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper-utils.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper-utils.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/popper.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/respond.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/respond.matchmedia.addListener.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/respond.matchmedia.addListener.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/respond.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper-utils.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper-utils.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper-utils.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper-utils.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/esm/popper.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper-utils.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper-utils.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper-utils.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper-utils.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper.min.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/umd/popper.min.js.map</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/DetailsView.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/Focus.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/GridView.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/Menu.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MenuStandards.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/SmartNav.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/TreeView.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/WebForms.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/WebParts.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/WebUIValidation.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjax.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxApplicationServices.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxComponentModel.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxCore.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxGlobalization.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxHistory.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxNetwork.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxSerialization.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxTimer.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxWebForms.js</div><div>src/eShopLegacyWebForms/wwwroot/Scripts/WebForms/MSAjax/MicrosoftAjaxWebServices.js</div></div></div>
+                          <div class="summary">
+                             <h4>Project Transformation Summary</h4><p>No changes</p>
+</div>
+                          <div class="summary">
+                              <h4> Project Build Errors Summary <sup>*</sup></h4><p>There are no build errors in this project</p></div>
+<p> <sup>*</sup> Builds are performed on a Linux machine and may not match the errors if you build on a Windows environment. </p></div>
+                <div class="back-to-top-section">
+                   <p><a href="#" class="back-to-top"><strong>Back to top</strong></a></p>
+                </div><h2 id="ut-results">Unit Test Results</h2><h3>Status: Not run</h3>
+                <div class="back-to-top-section">
+                   <p><a href="#" class="back-to-top"><strong>Back to top</strong></a></p>
+                </div>
+                <div class="footer">
+                   <p>Generated by AWS Transforms Migration Tool</p>
+                </div>
+               </body>
+             </html>

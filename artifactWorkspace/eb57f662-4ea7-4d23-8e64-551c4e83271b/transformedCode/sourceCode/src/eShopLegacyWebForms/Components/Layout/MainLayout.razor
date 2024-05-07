@@ -1,0 +1,72 @@
+
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalog manager (Blazor)</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+    <header class="navbar navbar-light navbar-static-top">
+        <div class="esh-header-brand">
+            <a href="/">
+                <img src="/images/brand.png" />
+            </a>
+        </div>
+    </header>
+
+    <section class="esh-app-hero">
+        <div class="container esh-header">
+            <h1 class="esh-header-title">Catalog manager <span>(Blazor)</span></h1>
+        </div>
+    </section>
+
+    <div>
+        @Body
+    </div>
+
+    <footer class="esh-app-footer">
+        <div class="container">
+            <article class="row">
+                <section class="col-sm-6">
+                    <img class="esh-app-footer-brand" src="/images/brand_dark.png" />
+                </section>
+                <section class="col-sm-6">
+                    <img class="esh-app-footer-text hidden-xs" src="/images/main_footer_text.png" width="335" height="26" alt="footer text image" />
+                    <br />
+                    <small style="color:white">@SessionInfo</small>
+                </section>
+            </article>
+        </div>
+    </footer>
+</body>
+</html>
+
+@code {
+    private string SessionInfo { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // In Blazor, we would need to implement session management differently
+        // This is a placeholder for the session information that was in the original WebForms app
+        // You would need to inject a service that manages session state in Blazor
+        SessionInfo = $"{GetMachineName()}, {GetSessionStartTime()}";
+    }
+
+    private string GetMachineName()
+    {
+        // Implementation to get machine name in Blazor
+        return Environment.MachineName;
+    }
+
+    private string GetSessionStartTime()
+    {
+        // Implementation to get session start time in Blazor
+        // This would typically come from a session state service
+        return DateTime.Now.ToString();
+    }
+}

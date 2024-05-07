@@ -1,0 +1,151 @@
+@namespace eShopLegacyWebForms.Components.Pages.Catalog.Create
+
+@page "/Catalog/Create"
+@using eShopLegacyWebForms.Models
+@using eShopLegacyWebForms.Services
+@using Microsoft.Extensions.Logging
+@inject ICatalogService CatalogService
+@inject ILogger<Create> Logger
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<h2 class="esh-body-title">Create</h2>
+
+<div>
+    <EditForm Model="@catalogItem" OnValidSubmit="CreateCatalogItem" FormName="createForm">
+        <DataAnnotationsValidator />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-2">Name</label>
+                <div class="col-md-3">
+                    <InputText @bind-Value="catalogItem.Name" class="form-control" />
+                    <ValidationMessage For="@(() => catalogItem.Name)" class="field-validation-valid text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Description</label>
+                <div class="col-md-3">
+                    <InputText @bind-Value="catalogItem.Description" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Brand</label>
+                <div class="col-md-3">
+                    <select value="@catalogItem.CatalogBrandId" @onchange="BrandSelectionChanged" class="form-control">
+                        @foreach (var brand in brands)
+                        {
+                            <option value="@brand.Id">@brand.Brand</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Type</label>
+                <div class="col-md-3">
+                    <select value="@catalogItem.CatalogTypeId" @onchange="TypeSelectionChanged" class="form-control">
+                        @foreach (var type in types)
+                        {
+                            <option value="@type.Id">@type.Type</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Price</label>
+                <div class="col-md-3">
+                    <InputNumber @bind-Value="catalogItem.Price" class="form-control" />
+                    <ValidationMessage For="@(() => catalogItem.Price)" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Picture name</label>
+                <div class="col-md-4 esh-form-information">
+                    Uploading images not allowed for this version.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Stock</label>
+                <div class="col-md-3">
+                    <InputNumber @bind-Value="catalogItem.AvailableStock" class="form-control" />
+                    <ValidationMessage For="@(() => catalogItem.AvailableStock)" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Restock</label>
+                <div class="col-md-3">
+                    <InputNumber @bind-Value="catalogItem.RestockThreshold" class="form-control" />
+                    <ValidationMessage For="@(() => catalogItem.RestockThreshold)" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Max stock</label>
+                <div class="col-md-3">
+                    <InputNumber @bind-Value="catalogItem.MaxStockThreshold" class="form-control" />
+                    <ValidationMessage For="@(() => catalogItem.MaxStockThreshold)" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-3 text-right esh-button-actions">
+                    <a href="/" class="btn esh-button esh-button-secondary">[ Cancel ]</a>
+                    <button type="submit" class="btn esh-button esh-button-primary">[ Create ]</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private CatalogItem catalogItem = new CatalogItem
+    {
+        Price = 0.00m,
+        AvailableStock = 0,
+        RestockThreshold = 0,
+        MaxStockThreshold = 0
+    };
+
+    private IEnumerable<CatalogBrand> brands = new List<CatalogBrand>();
+    private IEnumerable<CatalogType> types = new List<CatalogType>();
+
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation("Now loading... /Catalog/Create");
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        brands = CatalogService.GetCatalogBrands();
+        types = CatalogService.GetCatalogTypes();
+    }
+
+    private void BrandSelectionChanged(ChangeEventArgs e)
+    {
+        if (e.Value != null && int.TryParse(e.Value.ToString(), out int selectedValue))
+        {
+            catalogItem.CatalogBrandId = selectedValue;
+        }
+    }
+
+    private void TypeSelectionChanged(ChangeEventArgs e)
+    {
+        if (e.Value != null && int.TryParse(e.Value.ToString(), out int selectedValue))
+        {
+            catalogItem.CatalogTypeId = selectedValue;
+        }
+    }
+
+    private void CreateCatalogItem()
+    {
+        CatalogService.CreateCatalogItem(catalogItem);
+        NavigationManager.NavigateTo("/");
+    }
+}
